@@ -16,6 +16,9 @@ jobs:
       - name: Checkout du code
         uses: actions/checkout@v3
 
+      - name: List files in projetpython
+        run: ls -R ./projetpython  # List files to ensure the Dockerfile is there
+
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
@@ -26,12 +29,8 @@ jobs:
           python -m pip install --upgrade pip
           pip install pytest
 
-      # Test execution step has been removed
-      # - name: Exécuter les tests
-      #   run: pytest ./projetpython/test_app.py
-
       - name: Build image FastAPI
-        run: docker build -t projetpython-fastapi_app ./projetpython
+        run: docker build -t projetpython-fastapi_app ./projetpython  # Correct path to Dockerfile
 
       - name: Lancer Docker Compose
         run: docker-compose up -d

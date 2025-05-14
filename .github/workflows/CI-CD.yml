@@ -31,7 +31,7 @@ jobs:
       #   run: pytest ./projetpython/test_app.py
 
       - name: Build image FastAPI
-        run: docker build -t projetpython-fastapi_app .
+        run: docker build -t projetpython-fastapi_app ./projetpython
 
       - name: Lancer Docker Compose
         run: docker-compose up -d

@@ -1,0 +1,44 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout du code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Installer les dépendances Python
+        run: |
+          python -m pip install --upgrade pip
+          pip install pytest
+
+      - name: Exécuter les tests
+        run: pytest test_app.py
+
+      - name: Build image FastAPI
+        run: docker build -t projetpython-fastapi_app .
+
+      - name: Lancer Docker Compose
+        run: docker-compose up -d
+
+      - name: Vérifier que le service répond
+        run: |
+          sleep 10
+          curl --fail http://localhost:8001/docs || exit 1
+
+      - name: Fermer les conteneurs
+        run: docker-compose down

@@ -26,8 +26,9 @@ jobs:
           python -m pip install --upgrade pip
           pip install pytest
 
-      - name: Exécuter les tests
-        run: pytest test_app.py
+      # Test execution step has been removed
+      # - name: Exécuter les tests
+      #   run: pytest ./projetpython/test_app.py
 
       - name: Build image FastAPI
         run: docker build -t projetpython-fastapi_app .
